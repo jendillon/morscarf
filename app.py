@@ -28,22 +28,26 @@ def text_to_morse(text):
             morse_code.append(MORSE_CODE_DICT[char])
         elif char == ' ':
             morse_code.append(' ')  # Space between words
-    return ' '.join(morse_code)
+        else:
+            raise ValueError(f"Character '{char}' cannot be translated to Morse code.")
+    morse_code = ' '.join(morse_code)
+    return morse_code
 
 def morse_to_stripes(morse_code):
     stripes = np.array([])
     for symbol in morse_code:
         if symbol == '.':
-            stripes = np.append(stripes, 1) # Skinny stripe
+            stripes = np.append(stripes, 10) # Skinny stripe
         elif symbol == '-':
-            stripes = np.append(stripes, [1, 1, 1])  # Wide stripe
+            stripes = np.append(stripes, [10, 10, 10])  # Wide stripe
         elif symbol == ' ':
-            stripes = np.append(stripes, 0) # Space between words
-    print(stripes)
+            stripes = np.append(stripes, [1, 1]) # Space between words
+            continue
+        stripes = np.append(stripes, 1) # Space between stripes    
     return stripes
 
 def visualize_stripes(stripes):
-    pixels_per_stripe = 4
+    pixels_per_stripe = 10
     dpi = 100
 
     fig = plt.figure(figsize=(len(stripes)*pixels_per_stripe/dpi, 2), dpi=dpi)
@@ -64,7 +68,7 @@ def index():
         morse_code = text_to_morse(phrase)
         stripes = morse_to_stripes(morse_code)
         plot_url = visualize_stripes(stripes)
-        return render_template("index.html", morse_code=morse_code, plot_url=plot_url)
+        return render_template("index.html", phrase=phrase, morse_code=morse_code, plot_url=plot_url)
     return render_template("index.html")
 
 if __name__ == "__main__":

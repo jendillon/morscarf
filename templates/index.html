@@ -15,6 +15,7 @@
             <button type="submit">Translate</button>
         </form>
         {% if morse_code %}
+            <h2>Phrase: {{ phrase }}</h2>
             <h2>Morse Code: {{ morse_code }}</h2>
             {% if plot_url %}
                 <h3>Stripe Pattern Visualization:</h3>
