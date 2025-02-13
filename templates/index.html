@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Morse Code Translator</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Morse Code Translator</h1>
+        <form method="POST">
+            <label for="phrase">Enter a phrase:</label>
+            <input type="text" id="phrase" name="phrase" required>
+            <button type="submit">Translate</button>
+        </form>
+        {% if morse_code %}
+            <h2>Morse Code: {{ morse_code }}</h2>
+            {% if plot_url %}
+                <h3>Stripe Pattern Visualization:</h3>
+                <img src="data:image/png;base64,{{ plot_url }}" alt="Morse Code Visualization">
+            {% endif %}
+        {% endif %}
