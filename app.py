@@ -46,6 +46,38 @@ def morse_to_stripes(morse_code):
         stripes = np.append(stripes, 1) # Space between stripes    
     return stripes
 
+def stripes_to_pattern(stripes):
+    pattern = np.array(["In color 1, Make a sl kt. Chain 20.\n"])
+    repeat_row_counter = 1
+    previous_symbol = 1
+
+    for i, symbol in enumerate(stripes):
+        if symbol == 10 and previous_symbol == 1:
+            pattern = np.append(pattern, "In color 1, Sc 20 across.\n Ch 1. Turn.\n")
+            repeat_row_counter = 1 # Color changed, so reset repeat_row_counter
+        elif symbol == 10 and previous_symbol == 10:
+            if repeat_row_counter == 1:
+                pattern = np.append(pattern, "Repeat previous row {repeat_row_counter} more time(s).\n")                
+            else: 
+                pattern[-1] = f"Repeat previous row {repeat_row_counter} more time(s).\n"
+            repeat_row_counter += 1
+        elif symbol == 1 and previous_symbol == 10:
+            pattern = np.append(pattern, "In color 2, Sc 20 across.\n Ch 1. Turn.\n")       
+            repeat_row_counter = 1 # Color changed, so reset repeat_row_counter 
+        elif symbol == 1 and previous_symbol == 1:
+            if repeat_row_counter == 1:
+                pattern = np.append(pattern, "Repeat previous row {repeat_row_counter} more time(s).\n")
+            else:
+                pattern[-1] = f"Repeat previous row {repeat_row_counter} more time(s).\n"
+            repeat_row_counter += 1
+        else:
+            print("Invalid value")
+        
+        # print(f"Previous Symbol: {previous_symbol}, Symbol: {symbol}, Pattern: {pattern}")                    
+        previous_symbol = symbol
+    
+    return pattern
+
 def visualize_stripes(stripes):
     pixels_per_stripe = 10
     dpi = 100
@@ -68,7 +100,12 @@ def index():
         morse_code = text_to_morse(phrase)
         stripes = morse_to_stripes(morse_code)
         plot_url = visualize_stripes(stripes)
-        return render_template("index.html", phrase=phrase, morse_code=morse_code, plot_url=plot_url)
+        crochet_pattern = stripes_to_pattern(stripes)
+        return render_template("index.html", 
+                               phrase=phrase, 
+                               morse_code=morse_code, 
+                               plot_url=plot_url,
+                               crochet_pattern=crochet_pattern)
     return render_template("index.html")
 
 if __name__ == "__main__":
