@@ -27,14 +27,17 @@ def morse_to_stripes(morse_code):
     stripes = np.array([])
     for symbol in morse_code:
         if symbol == '.':
-            stripes = np.append(stripes, 10) # Skinny stripe
+            stripes = np.append(stripes, DOT)
         elif symbol == '-':
-            stripes = np.append(stripes, [10, 10, 10])  # Wide stripe
+            stripes = np.append(stripes, DASH)
         elif symbol == ' ':
-            stripes = np.append(stripes, [1, 1]) # Space between words
+            stripes = np.append(stripes, SPACE_LETTER) 
             continue
-        stripes = np.append(stripes, 1) # Space between stripes    
+        stripes = np.append(stripes, SPACE_STRIPE) # Space between stripes    
     return stripes
+
+def text_to_stripes(phrase):
+    return morse_to_stripes(text_to_morse(phrase))
 
 def stripes_to_pattern(stripes):
     pattern = np.array([FIRST_ROW])

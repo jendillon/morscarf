@@ -10,7 +10,14 @@ MORSE_CODE_DICT = {
     '9': '----.', ',': '--..--', '.': '.-.-.-', '?': '..--..', 
     '/': '-..-.', '-': '-....-', '(': '-.--.', ')': '-.--.-'}
 
+DOT = [10.]
+DASH = [10., 10., 10.]
+SPACE_LETTER = [1., 1.]
+SPACE_STRIPE = [1.]
+SPACE_WORD = [1., 1., 1., 1., 1., 1.]
+
 FIRST_ROW = "In color 1, Make a sl kt. Chain 20.\n"
 ROW_IN_COLOR_1 = "In color 1, Sc 20 across.\n Ch 1. Turn.\n"
 ROW_IN_COLOR_2 = "In color 2, Sc 20 across.\n Ch 1. Turn.\n"
 ROW_REPEAT = "Repeat previous row {repeat_row_counter} more time(s).\n"
+
