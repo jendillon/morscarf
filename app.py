@@ -36,8 +36,23 @@ def morse_to_stripes(morse_code):
         stripes = np.append(stripes, SPACE_STRIPE) # Space between stripes    
     return stripes
 
-def text_to_stripes(phrase):
-    return morse_to_stripes(text_to_morse(phrase))
+def text_to_stripes(text):
+    return morse_to_stripes(text_to_morse(text))
+
+def morse_to_pattern(morse_code):
+    pattern = np.array([FIRST_ROW])
+    
+    for symbol in morse_code:
+        if symbol == '.':
+            pattern = np.append(pattern, PATTERN_DOT)
+        elif symbol == '-':
+            pattern = np.append(pattern, PATTERN_DASH)
+        elif symbol == ' ':
+            pattern = np.append(pattern, PATTERN_SPACE_LETTER) 
+            continue
+        pattern = np.append(pattern, PATTERN_SPACE_STRIPE)
+    return pattern
+
 
 def stripes_to_pattern(stripes):
     pattern = np.array([FIRST_ROW])
@@ -92,12 +107,14 @@ def index():
         morse_code = text_to_morse(phrase)
         stripes = morse_to_stripes(morse_code)
         plot_url = visualize_stripes(stripes)
-        crochet_pattern = stripes_to_pattern(stripes)
+        crochet_pattern = morse_to_pattern(morse_code)
+            #stripes_to_pattern(stripes)
+        crochet_pattern_text = ''.join(crochet_pattern)
         return render_template("index.html", 
                                phrase=phrase, 
                                morse_code=morse_code, 
                                plot_url=plot_url,
-                               crochet_pattern=crochet_pattern)
+                               crochet_pattern=crochet_pattern_text)
     return render_template("index.html")
 
 if __name__ == "__main__":

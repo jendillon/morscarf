@@ -21,9 +21,9 @@
                 <h3>Stripe Pattern Visualization:</h3>
                 <img src="data:image/png;base64,{{ plot_url }}" alt="Morse Code Visualization">
             {% endif %}
-            {% if crochet_pattern.any() %}
+            {% if crochet_pattern %}
                 <h3>Crochet Pattern:</h3>
-                <h3>{{ crochet_pattern }}</h3>
+                <h3><pre>{{ crochet_pattern }}</div>pre></h3>
             {% endif %}
         {% endif %}
     </div>
