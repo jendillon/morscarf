@@ -33,7 +33,7 @@ def morse_to_stripes(morse_code):
         elif symbol == ' ':
             stripes = np.append(stripes, SPACE_LETTER) 
             continue
-        stripes = np.append(stripes, SPACE_STRIPE) # Space between stripes    
+        stripes = np.append(stripes, SPACE_STRIPE) 
     return stripes
 
 def text_to_stripes(text):
